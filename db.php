@@ -6,10 +6,11 @@ class DataBase {
         $this->dbh = new PDO('mysql:host=localhost;dbname=todo', $user, $password);
     }
 
-    function createUser($nom, $password){
-        // $stmt = $this->dbh->prepare('INSERT INTO `utilisateur` (`nom`, `password`) VALUES ($nom, $password)');
-        $str = "INSERT INTO `utilisateur` (`nom`, `password`) VALUES ('$nom', '$password')";
-        $this->dbh->query($str);
+    function createUser($adresseMail, $nom, $password){
+        $stmt = $this->dbh->prepare("INSERT INTO `utilisateurs` (`adresseMail`, `nom`, `password`) VALUES ('$adresseMail', '$nom', '$password')");
+        $stmt->execute();
+        // $str = "INSERT INTO `utilisateurs` (`adresseMail`, `nom`, `password`) VALUES ('$adresseMail', '$nom', '$password')";
+        // $this->dbh->query($str);
     }   
 }
 ?>

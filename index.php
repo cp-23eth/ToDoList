@@ -7,19 +7,29 @@
 </head>
 <body>
     <?php
-        $user = 'root';
-        $password = '';
+        header("Location: login.php");
+        exit();
 
         require_once('db.php');
-        $db = new dataBase($user, $password);
-
-        $nom = 'Ethan';
-        $password = 'password';
-
+        $db = new dataBase("root", "");
+        
+        // $stmt->binParam(':ethan.hofstetter@ceff.ch', $adresseMail);
         // $stmt->binParam(':Ethan', $nom);
         // $stmt->binParam(':salut', $password);
 
-        $db->createUser($nom, $password);
+        // $adresseMail = "ethan.hofstetter@ceff.ch";
+        // $nom = "ethan";
+        // $password = 'password';
+
+        // if ($db.$adresseMail === $adresseMail){
+        //     echo "L'adresse mail est déjà utilisée";
+        // }
+        // else if ($db.$nom === $nom) {
+        //     echo "Le nom d'utilisateur est déjà utilisé";
+        // }
+        // else {
+        //     $db->createUser($adresseMail, $nom, $password);
+        // }
         // $stmt->execute();
     ?>
 </body>

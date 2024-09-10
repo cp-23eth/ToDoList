@@ -1,3 +1,8 @@
+<?php
+    require_once('db.php');
+    $db = new dataBase("root", "");
+?>
+
 <!doctype html>
 <html lang="en">
     <head>
@@ -39,6 +44,9 @@
                     <h3 class="offset-4 col-4 text-center">Entrez vos informations pour vous connecter :</h3>
                 </div>
                 <div class="row mt-2">
+                    <div class="offset-4 col-4 d-grid mt-3"><input name="adresseMail" type="text" class="p-3 rounded-5 border-0 text-center fs-4 input" placeholder="Mot de passe"></div>
+                </div>
+                <div class="row mt-2">
                     <div class="offset-4 col-4 d-grid mt-3"><input name="identifiant" type="text" class="p-3 rounded-5 border-0 text-center fs-4 input" placeholder="Identifiant"></div>
                 </div>
                 <div class="row mt-2">
@@ -51,7 +59,7 @@
                     <div class="offset-4 col-4 d-grid"><hr></div>
                 </div>
                 <div class="row">
-                    <div class="offset-5 col-2 d-grid"><button class="rounded-4 border-0 p-1 bouton">Créer un compte</button></div>
+                    <div class="offset-5 col-2 d-grid"><button class="rounded-4 border-0 p-1 bouton"> <a href="signUp.php">Créer un compte</a></button></div>
                 </div>
             </div>
         </main>
@@ -69,5 +77,15 @@
             integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+"
             crossorigin="anonymous"
         ></script>
+
+        <?php
+            if (isset($_POST['adresseMail']) && isset($_POST['identifiant']) && isset($_POST['mdp'])){
+                $adresseMail = $_POST['adresseMail'];
+                $nom = $_POST['identifiant'];
+                $password = $_POST['mdp'];
+
+                if ()
+            }
+        ?>
     </body>
 </html>
