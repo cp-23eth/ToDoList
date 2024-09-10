@@ -86,9 +86,9 @@
                 $nom = $_POST['identifiant'];
                 $password = $_POST['mdp'];
 
-                if ($db->createUser($adresseMail, $nom, $password)){
+                if ($db->createUser($adresseMail, $nom, $password)) {
                     header("Location: login.php");
-                    exit(); 
+                    exit();
                 }
             }
         ?>

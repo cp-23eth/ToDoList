@@ -38,30 +38,29 @@
             <h1 class="text-center fw-bold" style="font-size: 70px;">ToDo List - Login</h1>
         </header>
         <main>
-            <div class="container"><div class=""></div>
-                <div class="row mt-5"></div><div class="row mt-5"></div><div class="row mt-5"></div><div class="row mt-5">
-                <div class="row mt-5">
-                    <h3 class="offset-4 col-4 text-center">Entrez vos informations pour vous connecter :</h3>
+            <form action="" method="post">
+                <div class="container"><div class=""></div>
+                    <div class="row mt-5"></div><div class="row mt-5"></div><div class="row mt-5"></div><div class="row mt-5">
+                    <div class="row mt-5">
+                        <h3 class="offset-4 col-4 text-center">Entrez vos informations pour vous connecter :</h3>
+                    </div>
+                    <div class="row mt-2">
+                        <div class="offset-4 col-4 d-grid mt-3"><input name="identifiant" type="text" class="p-3 rounded-5 border-0 text-center fs-4 input" placeholder="Identifiant"></div>
+                    </div>
+                    <div class="row mt-2">
+                        <div class="offset-4 col-4 d-grid mt-3"><input name="mdp" type="text" class="p-3 rounded-5 border-0 text-center fs-4 input" placeholder="Mot de passe"></div>
+                    </div>
+                    <div class="row mt-4">
+                        <div class="offset-5 col-2 d-grid mt-3"><button type="submit" class="rounded-4 border-0 p-1 bouton">Confirmer</button></div>
+                    </div>
+                    <div class="row">
+                        <div class="offset-4 col-4 d-grid"><hr></div>
+                    </div>
+                    <div class="row">
+                        <div class="offset-5 col-2 d-grid"><button class="rounded-4 border-0 p-1 bouton"> <a href="signUp.php">Créer un compte</a></button></div>
+                    </div>
                 </div>
-                <div class="row mt-2">
-                    <div class="offset-4 col-4 d-grid mt-3"><input name="adresseMail" type="text" class="p-3 rounded-5 border-0 text-center fs-4 input" placeholder="Mot de passe"></div>
-                </div>
-                <div class="row mt-2">
-                    <div class="offset-4 col-4 d-grid mt-3"><input name="identifiant" type="text" class="p-3 rounded-5 border-0 text-center fs-4 input" placeholder="Identifiant"></div>
-                </div>
-                <div class="row mt-2">
-                    <div class="offset-4 col-4 d-grid mt-3"><input name="mdp" type="text" class="p-3 rounded-5 border-0 text-center fs-4 input" placeholder="Mot de passe"></div>
-                </div>
-                <div class="row mt-4">
-                    <div class="offset-5 col-2 d-grid mt-3"><button class="rounded-4 border-0 p-1 bouton">Confirmer</button></div>
-                </div>
-                <div class="row">
-                    <div class="offset-4 col-4 d-grid"><hr></div>
-                </div>
-                <div class="row">
-                    <div class="offset-5 col-2 d-grid"><button class="rounded-4 border-0 p-1 bouton"> <a href="signUp.php">Créer un compte</a></button></div>
-                </div>
-            </div>
+            </form>
         </main>
         <footer>
             <!-- place footer here -->
@@ -79,12 +78,14 @@
         ></script>
 
         <?php
-            if (isset($_POST['adresseMail']) && isset($_POST['identifiant']) && isset($_POST['mdp'])){
-                $adresseMail = $_POST['adresseMail'];
+            if (isset($_POST['identifiant']) && isset($_POST['mdp'])){
                 $nom = $_POST['identifiant'];
                 $password = $_POST['mdp'];
 
-                if ()
+                if($db->login($nom, $password)){
+                    header("Location: main.php");
+                    exit(); 
+                }
             }
         ?>
     </body>
