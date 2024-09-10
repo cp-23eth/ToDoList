@@ -18,16 +18,18 @@ class DataBase {
 
         $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
-        if ($user['adresseMail'] === $adresseMail){
-            echo "<br>";
-            echo "Error : cette adresse mail est déjà prise";
-        }
-        else if ($user['nom'] === $nom){
-            echo "<br>";
-            echo "Error : ce nom est déjà prise";
-        }
-        else {
+        if (!$user){
             return true;
+        }
+        else{
+            if ($user['adresseMail'] === $adresseMail){
+                echo "<br>";
+                echo "Error : cette adresse mail est déjà prise";
+            }
+            else if ($user['nom'] === $nom){
+                echo "<br>";
+                echo "Error : ce nom est déjà prise";
+            }
         }
     }
 

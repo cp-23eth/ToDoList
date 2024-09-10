@@ -51,7 +51,7 @@
                         <div class="offset-4 col-4 d-grid mt-3"><input name="identifiant" type="text" class="p-3 rounded-5 border-0 text-center fs-4 input" placeholder="Identifiant"></div>
                     </div>
                     <div class="row mt-2">
-                        <div class="offset-4 col-4 d-grid mt-3"><input name="mdp" type="text" class="p-3 rounded-5 border-0 text-center fs-4 input" placeholder="Mot de passe"></div>
+                        <div class="offset-4 col-4 d-grid mt-3"><input name="mdp" type="password" class="p-3 rounded-5 border-0 text-center fs-4 input" placeholder="Mot de passe"></div>
                     </div>
                     <div class="row mt-4">
                         <div class="offset-5 col-2 d-grid mt-3"><button class="rounded-4 border-0 p-1 bouton text-center">Créer</button></div>
@@ -86,9 +86,11 @@
                 $nom = $_POST['identifiant'];
                 $password = $_POST['mdp'];
 
-                if ($db->createUser($adresseMail, $nom, $password)) {
-                    header("Location: login.php");
-                    exit();
+                if ($db->user($adresseMail, $nom)){
+                    if ($db->createUser($adresseMail, $nom, $password)) {
+                        header("Location: login.php");
+                        exit();
+                    }
                 }
             }
         ?>
