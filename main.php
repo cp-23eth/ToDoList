@@ -24,8 +24,11 @@
         <h1 class="text-center fw-bold" style="font-size: 70px;">
             Vos tâches 
         </h1>
-        <button class="rounded-3" style="width: 40px; height: 40px; position: absolute; right: 0; top: 50%; transform: translateY(-50%); opacity: 0; pointer-events: all;">
+        <button class="rounded-3" style="width: 40px; height: 40px" onclick="window.location.href = 'login.php'">
             <i class="fas fa-sign-out-alt"></i>
+        </button>
+        <button class="rounded-3" style="width: 40px; height: 40px" onclick="window.location.href = 'addTask.php'">
+            <i class="fa-solid fa-plus"></i>
         </button>
     </div>
 

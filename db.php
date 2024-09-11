@@ -43,10 +43,22 @@ class DataBase {
         if ($user['nom'] === $nom && $user['password'] === $password){
             return true;
         }
+        else if ($user['nom'] === "" && $user['password'] === ""){
+            echo "<br>";
+            echo "Error, vos informations de connexion sont éronnées"; 
+        }
         else {
             echo "<br>";
             echo "Error, vos informations de connexion sont éronnées";
         }
+    }
+
+    function task($titre, $dateToDo, $valueToDo) {
+        $stmt = $this->dbh->prepare("INSERT INTO `task` (`nom`, `dateToDo`, `valueToDo`) VALUES ('$titre', '$dateToDo', '$valueToDo')");
+        // $stmt->bindParam(':titre', $titre);
+        // $stmt->bindParam(':valueToDo', $valueToDo);
+        // $stmt->bindParam(':dateToDo', $dateToDo);
+        $stmt->execute();
     }
 }
 ?>
