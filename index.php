@@ -13,7 +13,7 @@
         require_once('db.php');
         $db = new dataBase("root", "");
 
-        $this->affichageMain();
+        //$this->affichageMain();
     ?>
 </body>
 </html>

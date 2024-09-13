@@ -67,37 +67,36 @@ class DataBase {
 
         $tableau = [];
 
-        // foreach ($stmt as $task){
-        //     $tache = $stmt->fetch(PDO::FETCH_ASSOC);
-        //     $tableau[] = $tache; 
-        // }
-
         while ($task = $stmt->fetch(PDO::FETCH_ASSOC)){
             $tableau[] = $task;
         }
 
         return $tableau;
     }
+
+    function infoTask($id){
+        $stmt = $this->dbh->prepare("SELECT * FROM `task` WHERE `Id_ToDo` = '$id'");
+        $stmt->execute();
+
+        $tableau2 = [];
+
+        while ($task = $stmt->fetch(PDO::FETCH_ASSOC)){
+            $tableau2[] = $task;
+        }
+
+        return $tableau2;
+    }
     
-    function deleteTask($valeur) {
-        $stmt = $this->dbh->prepare("DELETE FROM `todo`.`task` WHERE (`valueToDo` = '$valeur')");
+    function deleteTask($id) {
+        $stmt = $this->dbh->prepare("DELETE FROM `todo`.`task` WHERE (`Id_ToDo` = '$id')");
         $stmt->execute();
         $this->takeTask();
         header("Location: main.php");
         exit();
     }
 
-    function idTask($valeur){
-        $stmt = $this->dbh->prepare("SELECT `Id_ToDO` FROM `task` WHERE (`valueToDo` = '$valeur')");
-        $stmt->execute();
-
-        $idTask = $stmt;
-        return $idTask;
-    }
-
-    function editTask($titreM, $dateToDoM, $valueToDoM){
-        $id = $this->idTask($valueToDoM);
-        $stmt = $this->dbh->prepare("UPDATE `task` SET `nom` = '$titreM', `valueToDo` = '$valueToDoM', `dateToDo` = '$dateToDoM' WHERE `Id_ToDo = '$id'");
+    function editTask($id, $titre, $dateToDo, $valueToDo){
+        $stmt = $this->dbh->prepare("UPDATE `task` SET `nom` = '$titre', `valueToDo` = '$valueToDo', `dateToDo` = '$dateToDo' WHERE `Id_ToDo` = '$id'");
         $stmt->execute(); 
         header("Location: main.php");
         exit();
