@@ -3,10 +3,14 @@
     $db = new dataBase("root", "");
 ?>
 
+<?php
+    $db->deleteTask($_POST['edit']); // valeur
+?>
+
 <!doctype html>
 <html lang="en">
     <head>
-        <title>Add Tast</title>
+        <title>Edit Task</title>
         <!-- Required meta tags -->
         <meta charset="utf-8" />
         <meta
@@ -36,14 +40,14 @@
     <body>
         <header>
             <header class="p-2" style="background-color: #C8AD7F;">
-            <h1 class="text-center fw-bold" style="font-size: 70px;">Ajouter des tâches</h1>
+            <h1 class="text-center fw-bold" style="font-size: 70px;">Modification de tâche</h1>
         </header>
         <main>
             <form action="" method="post">
                 <div class="container"><div class=""></div>
                     <div class="row mt-5"></div><div class="row mt-2"></div><div class="row mt-5">
                     <div class="row mt-5">
-                        <h3 class="offset-4 col-4 text-center">Entrez les informations pour la création de votre tâche</h3>
+                        <h3 class="offset-4 col-4 text-center">Entrez les modifications pour la tâche</h3>
                     </div>
                     <div class="row mt-2">
                         <div class="offset-4 col-4 d-grid mt-3"><input name="titre" type="text" class="p-3 rounded-5 border-0 text-center fs-2 input" placeholder="Titre"></div>
@@ -84,14 +88,12 @@
 
         <?php
             if (isset($_POST['titre']) && isset($_POST['tache']) && isset($_POST['date'])){
-                $titre = $_POST['titre'];
-                $valueToDo = htmlspecialchars($_POST['tache']);
-                $dateToDo = $_POST['date'];
-                if ($titre !== "" && $valueToDo !== "" && $dateToDo !== ""){
-                    if ($db->task($titre, $dateToDo, $valueToDo)){
-                        header("Location: main.php");
-                        exit();
-                    }
+                $titreM = $_POST['titre'];
+                $valueToDoM = htmlspecialchars($_POST['tache']);
+                $dateToDoM = $_POST['date'];
+                if ($db->editTask($titreM, $dateToDoM, $valueToDoM)){
+                    header("Location: main.php");
+                    exit();
                 }
             }
         ?>

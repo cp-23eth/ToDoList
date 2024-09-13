@@ -60,5 +60,47 @@ class DataBase {
         // $stmt->bindParam(':dateToDo', $dateToDo);
         $stmt->execute();
     }
+
+    function takeTask(){
+        $stmt = $this->dbh->prepare("SELECT * FROM `task`");
+        $stmt->execute();
+
+        $tableau = [];
+
+        // foreach ($stmt as $task){
+        //     $tache = $stmt->fetch(PDO::FETCH_ASSOC);
+        //     $tableau[] = $tache; 
+        // }
+
+        while ($task = $stmt->fetch(PDO::FETCH_ASSOC)){
+            $tableau[] = $task;
+        }
+
+        return $tableau;
+    }
+    
+    function deleteTask($valeur) {
+        $stmt = $this->dbh->prepare("DELETE FROM `todo`.`task` WHERE (`valueToDo` = '$valeur')");
+        $stmt->execute();
+        $this->takeTask();
+        header("Location: main.php");
+        exit();
+    }
+
+    function idTask($valeur){
+        $stmt = $this->dbh->prepare("SELECT `Id_ToDO` FROM `task` WHERE (`valueToDo` = '$valeur')");
+        $stmt->execute();
+
+        $idTask = $stmt;
+        return $idTask;
+    }
+
+    function editTask($titreM, $dateToDoM, $valueToDoM){
+        $id = $this->idTask($valueToDoM);
+        $stmt = $this->dbh->prepare("UPDATE `task` SET `nom` = '$titreM', `valueToDo` = '$valueToDoM', `dateToDo` = '$dateToDoM' WHERE `Id_ToDo = '$id'");
+        $stmt->execute(); 
+        header("Location: main.php");
+        exit();
+    }
 }
 ?>
