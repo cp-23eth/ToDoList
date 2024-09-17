@@ -7,12 +7,17 @@ class DataBase {
     }
 
     function createUser($adresseMail, $nom, $password){
-        $stmt = $this->dbh->prepare("INSERT INTO `utilisateurs` (`adresseMail`, `nom`, `password`) VALUES ('$adresseMail', '$nom', '$password')");
+        $stmt = $this->dbh->prepare("INSERT INTO `utilisateurs` (`adresseMail`, `nom`, `password`) VALUES (:adresseMail, :nom, :password)");
+        $stmt->bindParam(':adresseMail', $adresseMail);
+        $stmt->bindParam(':nom', $nom);
+        $stmt->bindParam(':password', $password);
         $stmt->execute();
     }
 
     function user($adresseMail, $nom){
-        $stmt = $this->dbh->prepare("SELECT * FROM utilisateurs WHERE `adresseMail` = '$adresseMail' OR `nom` = '$nom'");
+        $stmt = $this->dbh->prepare("SELECT * FROM utilisateurs WHERE `adresseMail` = :adresseMail OR `nom` = :nom");
+        $stmt->bindParam(':adresseMail', $adresseMail);
+        $stmt->bindParam(':nom', $nom);
         $stmt->execute();
 
         $user = $stmt->fetch(PDO::FETCH_ASSOC);
@@ -37,14 +42,16 @@ class DataBase {
     }
 
     function login($nom, $password){
-        $stmt = $this->dbh->prepare("SELECT * FROM `utilisateurs` where `nom` = '$nom' AND `password` = '$password'");
-        // $stmt->bindParam(':nom', $nom);
-        // $stmt->bindParam(':password', $password);
+        $stmt = $this->dbh->prepare("SELECT * FROM `utilisateurs` where `nom` = :nom");
+        $stmt->bindParam(':nom', $nom);
         $stmt->execute();
 
         $user = $stmt->fetch(PDO::FETCH_ASSOC);
+        
 
         if ($user !== false){
+            $_SESSION['idUser'] = $user['Id_Utilisateurs'];
+
             if ($user['nom'] === $nom && $user['password'] === $password){
                 return true;
             }
@@ -60,10 +67,11 @@ class DataBase {
 
     function task($titre, $dateToDo, $valueToDo) {
         $idUser = $_SESSION['idUser'];
-        $stmt = $this->dbh->prepare("INSERT INTO `task` (`nom`, `dateToDo`, `valueToDo`, `Id_Utilisateurs`) VALUES ('$titre', '$dateToDo', '$valueToDo', '$idUser')");
-        // $stmt->bindParam(':titre', $titre);
-        // $stmt->bindParam(':valueToDo', $valueToDo);
-        // $stmt->bindParam(':dateToDo', $dateToDo);
+        $stmt = $this->dbh->prepare("INSERT INTO `task` (`nom`, `dateToDo`, `valueToDo`, `Id_Utilisateurs`) VALUES (:titre, :dateToDo, :valueToDo, :idUser)");
+        $stmt->bindParam(':titre', $titre);
+        $stmt->bindParam(':dateToDo', $dateToDo);
+        $stmt->bindParam(':valueToDo', $valueToDo);
+        $stmt->bindParam(':idUser', $idUser);
         $stmt->execute();
     }
 
@@ -81,7 +89,8 @@ class DataBase {
     }
 
     function infoTask($id){
-        $stmt = $this->dbh->prepare("SELECT * FROM `task` WHERE `Id_ToDo` = '$id'");
+        $stmt = $this->dbh->prepare("SELECT * FROM `task` WHERE `Id_ToDo` = :id");
+        $stmt->bindParam(':id', $id);
         $stmt->execute();
 
         $tableau2 = [];
@@ -94,15 +103,21 @@ class DataBase {
     }
     
     function deleteTask($id) {
-        $stmt = $this->dbh->prepare("DELETE FROM `todo`.`task` WHERE (`Id_ToDo` = '$id')");
+        $stmt = $this->dbh->prepare("DELETE FROM `todo`.`task` WHERE `Id_ToDo` = :id");
+        $stmt->bindParam(':id', $id);
         $stmt->execute();
+
         $this->takeTask();
         header("Location: main.php");
         exit();
     }
 
     function editTask($id, $titre, $dateToDo, $valueToDo){
-        $stmt = $this->dbh->prepare("UPDATE `task` SET `nom` = '$titre', `valueToDo` = '$valueToDo', `dateToDo` = '$dateToDo' WHERE `Id_ToDo` = '$id'");
+        $stmt = $this->dbh->prepare("UPDATE `task` SET `nom` = :titre, `valueToDo` = :valueToDo, `dateToDo` = :dateToDo WHERE `Id_ToDo` = :id");
+        $stmt->bindParam(':titre', $titre);
+        $stmt->bindParam(':valueToDo', $valueToDo);
+        $stmt->bindParam(':dateToDo', $dateToDo);
+        $stmt->bindParam(':id', $id);
         $stmt->execute(); 
         header("Location: main.php");
         exit();
