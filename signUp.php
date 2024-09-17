@@ -1,4 +1,5 @@
 <?php
+    session_start();
     require_once('db.php');
     $db = new dataBase("root", "");
 ?>
@@ -85,8 +86,13 @@
                 $adresseMail = $_POST['adresseMail'];
                 $nom = $_POST['identifiant'];
                 $password = $_POST['mdp'];
+                $error = $db->user($adresseMail, $nom);
 
-                if ($db->user($adresseMail, $nom)){
+                if ($error === "Cette adresse mail est déjà prise" || $error === "Ce nom est déjà pris"){
+                    echo "<br>";
+                    echo "<div class='text-danger text-center fs-3'>$error</div>";
+                }
+                else {
                     if ($db->createUser($adresseMail, $nom, $password)) {
                         header("Location: login.php");
                         exit();

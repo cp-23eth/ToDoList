@@ -1,4 +1,5 @@
 <?php
+    session_start();
     require_once('db.php');
     $db = new dataBase("root", "");
 ?>
@@ -46,9 +47,11 @@
         <?php 
             $tache = $db->infoTask($id);
 
-            $nom = $tache['nom'];
-            $value = $tache['valueToDo'];
-            $date = $tache['dateToDo'];
+            foreach($tache as $t){
+                $nom = $t['nom'];
+                $value = $t['valueToDo'];
+                $date = $t['dateToDo'];
+            }
         ?>
 
             <form action="" method="post">
@@ -60,13 +63,13 @@
                         <h3 class="offset-4 col-4 text-center">Entrez les modifications pour la tâche</h3>
                     </div>
                     <div class="row mt-2">
-                        <div class="offset-4 col-4 d-grid mt-3"><input name="titre" type="text" class="p-3 rounded-5 border-0 text-center fs-2 input"><?= $nom ?></div>
+                        <div class="offset-4 col-4 d-grid mt-3"><input name="titre" type="text" class="p-3 rounded-5 border-0 text-center fs-2 input" value="<?= $nom ?>"></div>
                     </div>
                     <div class="row mt-2">
                         <div class="offset-4 col-4 d-grid mt-3"><textarea name="tache" type="text" class="p-3 rounded-5 border-0 text-center fs-5 input" rows="8" cols="30"><?= $value ?></textarea>
                     </div>
                     <div class="row mt-2">
-                        <div class="offset-4 col-4 d-grid mt-3"><input name="date" type="date" class="p-3 rounded-5 border-0 text-center fs-4 input"><?= $date ?></div>
+                        <div class="offset-4 col-4 d-grid mt-3"><input name="date" type="date" class="p-3 rounded-5 border-0 text-center fs-4 input" value="<?= $date ?>"></div>
                     </div>
                     <div class="row mt-4">
                         <div class="offset-5 col-2 d-grid mt-3"><button type="submit" class="rounded-4 border-0 p-1 bouton">Confirmer</button></div>
@@ -98,7 +101,7 @@
 
         <?php
             if (isset($_POST['titre']) && isset($_POST['tache']) && isset($_POST['date'])){
-                $titre = $_POST['titre'];
+                $titre = htmlspecialchars($_POST['titre']);
                 $valueToDo = htmlspecialchars($_POST['tache']);
                 $dateToDo = $_POST['date'];
                 if ($id !== ""){

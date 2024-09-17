@@ -1,6 +1,9 @@
 <?php
+    session_start();
     require_once('db.php');
     $db = new dataBase("root", "");
+
+    $_SESSION['errorLogin'] = "";
 ?>
 
 <!doctype html>
@@ -81,8 +84,12 @@
             if (isset($_POST['identifiant']) && isset($_POST['mdp'])){
                 $nom = $_POST['identifiant'];
                 $password = $_POST['mdp'];
-
-                if($db->login($nom, $password)){
+                $error = $db->login($nom, $password);
+                if($error === false){
+                    echo "<br>";
+                    echo "<div class='text-danger text-center fs-3'>Veuillez entrer des informations de connexion correctes</div>";
+                }
+                else {
                     header("Location: main.php");
                     exit(); 
                 }

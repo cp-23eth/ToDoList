@@ -12,49 +12,55 @@ class DataBase {
     }
 
     function user($adresseMail, $nom){
-        $stmt = $this->dbh->prepare("SELECT * FROM utilisateurs where adresseMail = :adresseMail");
-        $stmt->bindParam(':adresseMail', $adresseMail);
+        $stmt = $this->dbh->prepare("SELECT * FROM utilisateurs WHERE `adresseMail` = '$adresseMail' OR `nom` = '$nom'");
         $stmt->execute();
 
         $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
-        if (!$user){
-            return true;
+        if($user !== false){
+            if ($user['nom'] === $nom){
+                $error = "Ce nom est déjà pris";
+                return $error;
+            }
+            else if ($user['adresseMail'] === $adresseMail){
+                $error = "Cette adresse mail est déjà prise";
+                return $error;
+            }
+            else {
+                return true;
+            }
         }
         else{
-            if ($user['adresseMail'] === $adresseMail){
-                echo "<br>";
-                echo "Error : cette adresse mail est déjà prise";
-            }
-            else if ($user['nom'] === $nom){
-                echo "<br>";
-                echo "Error : ce nom est déjà prise";
-            }
+            return true;
         }
+        
     }
 
     function login($nom, $password){
-        $stmt = $this->dbh->prepare("SELECT * FROM utilisateurs where nom = :nom");
-        $stmt->bindParam(':nom', $nom);
+        $stmt = $this->dbh->prepare("SELECT * FROM `utilisateurs` where `nom` = '$nom' AND `password` = '$password'");
+        // $stmt->bindParam(':nom', $nom);
+        // $stmt->bindParam(':password', $password);
         $stmt->execute();
 
         $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
-        if ($user['nom'] === $nom && $user['password'] === $password){
-            return true;
+        if ($user !== false){
+            if ($user['nom'] === $nom && $user['password'] === $password){
+                return true;
+            }
+            else {
+                return false;
+            }
         }
-        else if ($user['nom'] === "" && $user['password'] === ""){
-            echo "<br>";
-            echo "Error, vos informations de connexion sont éronnées"; 
-        }
-        else {
-            echo "<br>";
-            echo "Error, vos informations de connexion sont éronnées";
-        }
+        else{
+            return false;
+        } 
     }
+        
 
     function task($titre, $dateToDo, $valueToDo) {
-        $stmt = $this->dbh->prepare("INSERT INTO `task` (`nom`, `dateToDo`, `valueToDo`) VALUES ('$titre', '$dateToDo', '$valueToDo')");
+        $idUser = $_SESSION['idUser'];
+        $stmt = $this->dbh->prepare("INSERT INTO `task` (`nom`, `dateToDo`, `valueToDo`, `Id_Utilisateurs`) VALUES ('$titre', '$dateToDo', '$valueToDo', '$idUser')");
         // $stmt->bindParam(':titre', $titre);
         // $stmt->bindParam(':valueToDo', $valueToDo);
         // $stmt->bindParam(':dateToDo', $dateToDo);

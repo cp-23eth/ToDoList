@@ -1,7 +1,15 @@
 <?php
-require_once('db.php');
-$db = new dataBase("root", "");
+    session_start();
+    require_once('db.php');
+    $db = new dataBase("root", "");
 ?>
+
+<!-- <?php 
+    if (isset($_POST['confirmation'])){
+        header("Location: main.php");
+        exit();
+    }
+?> mardi-->
 
 <!doctype html>
 <html lang="en">
@@ -51,33 +59,36 @@ $db = new dataBase("root", "");
                 $nom = $task['nom'];
                 $value = $task['valueToDo'];
                 $date = $task['dateToDo'];
+                $userId = $task['Id_Utilisateurs'];
 
-                if ($row % 3 === 0 && $row != 0) {
-                    echo "<div class='row'>";
-                } ?>
+                if ($userId === $_SESSION['idUser']){
+                    if ($row % 3 === 0 && $row != 0) {
+                        echo "<div class='row'>";
+                    } ?>
 
-                <div class='col-md-4'>
-                    <div class='card border-3 mt-5 card-body d-flex flex-column' style='width: 100%; height: 22rem;' id='$row'>
-                        <h2 style='background-color: #83939e;' class='card-title text-center rounded-4 fw-bold m-1'><?= $nom ?></h2>
-                        <div class='Description flex-grow-1'>
-                            <p class='card-text p-2'><?= $value ?></p>
-                        </div>
-                        <div class='d-flex align-items-center justify-content-between mt-5'>
-                            <form method='post' action='deleteTask.php'>
-                                <button type='submit' name='delete' value='<?= $id ?>' class='fa-solid fa-xmark fs-4 border-0' style='background-color: white'></button>
-                            </form>
-                            <h4 class='text-center p-2 rounded-4 flex-grow-1 mx-3' style='background-color: #cfd6db;'><?= $date ?></h4>
-                            <form method='post' action='editTask.php'>
-                                <button type='submit' name='edit' value='<?= $id ?>' class='fa-solid fa-pencil fs-4 border-0' style='background-color: white'></button>
-                            </form>
+                    <div class='col-md-4'>
+                        <div class='card border-3 mt-5 card-body d-flex flex-column' style='width: 100%; height: 22rem;' id='$row'>
+                            <h2 style='background-color: #83939e;' class='card-title text-center rounded-4 fw-bold m-1'><?= $nom ?></h2>
+                            <div class='Description flex-grow-1'>
+                                <p class='card-text p-2'><?= $value ?></p>
+                            </div>
+                            <div class='d-flex align-items-center justify-content-between mt-5'>
+                                <form method='post' action='deleteTask.php'>
+                                    <button type='submit' name='delete' value='<?= $id ?>' class='fa-solid fa-check fs-4 border-0' style='background-color: white'></button>
+                                </form>
+                                <h4 class='text-center p-2 rounded-4 flex-grow-1 mx-3' style='background-color: #cfd6db;'><?= $date ?></h4>
+                                <form method='post' action='editTask.php'>
+                                    <button type='submit' name='edit' value='<?= $id ?>' class='fa-solid fa-pencil fs-4 border-0' style='background-color: white'></button>
+                                </form>
+                            </div>
                         </div>
                     </div>
-                </div>
             <?php
                 $row++;
 
                 if ($row % 3 === 0 && $row != 0) {
                     echo "</div>";
+                }
                 }
             }
             ?>

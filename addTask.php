@@ -1,4 +1,5 @@
 <?php
+    session_start();
     require_once('db.php');
     $db = new dataBase("root", "");
 ?>
@@ -40,7 +41,7 @@
         </header>
         <main>
             <form action="" method="post">
-                <div class="container"><div class=""></div>
+                <div class="container">
                     <div class="row mt-5"></div><div class="row mt-2"></div><div class="row mt-5">
                     <div class="row mt-5">
                         <h3 class="offset-4 col-4 text-center">Entrez les informations pour la création de votre tâche</h3>
@@ -55,7 +56,11 @@
                         <div class="offset-4 col-4 d-grid mt-3"><input name="date" type="date" class="p-3 rounded-5 border-0 text-center fs-4 input" placeholder="Date"></div>
                     </div>
                     <div class="row mt-4">
-                        <div class="offset-5 col-2 d-grid mt-3"><button type="submit" class="rounded-4 border-0 p-1 bouton">Confirmer</button></div>
+                        <div class="offset-5 col-2 d-grid mt-3">
+                            <form action="main.php" method="post">
+                                <button type="submit" name="confirmation" class="rounded-4 border-0 p-1 bouton">Confirmer</button>
+                            </form>
+                        </div>
                     </div>
                     <div class="row">
                         <div class="offset-4 col-4 d-grid"><hr></div>
@@ -82,9 +87,12 @@
             crossorigin="anonymous"
         ></script>
 
+        
+
         <?php
             if (isset($_POST['titre']) && isset($_POST['tache']) && isset($_POST['date'])){
-                $titre = $_POST['titre'];
+                
+                $titre = htmlspecialchars($_POST['titre']);
                 $valueToDo = htmlspecialchars($_POST['tache']);
                 $dateToDo = $_POST['date'];
                 if ($titre !== "" && $valueToDo !== "" && $dateToDo !== ""){
@@ -94,6 +102,8 @@
                     }
                 }
             }
+
+            // $idUser = $db->userId();
         ?>
     </body>
 </html>

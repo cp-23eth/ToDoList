@@ -1,0 +1,5 @@
+- Faire que lorsqu'on ajoute une tache la page main revienne ?
+- La meme pour les modifications
+- Erreur centrée + agrandie + au centre --> login et sign up
+- mettre des paramètres bind
+- enlever les echos du db.php

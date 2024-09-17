@@ -10,6 +10,7 @@
         header("Location: login.php");
         exit();
 
+        session_start();
         require_once('db.php');
         $db = new dataBase("root", "");
 
