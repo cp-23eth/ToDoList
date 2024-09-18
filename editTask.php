@@ -78,7 +78,7 @@
                         <div class="offset-4 col-4 d-grid"><hr></div>
                     </div>
                     <div class="row">
-                        <div class="offset-5 col-2 d-grid"><button class="rounded-4 border-0 p-1 bouton"><a href="main.php">Retour à la page d'accueil</a></button></div>
+                        <div class="offset-5 col-2 d-grid"><button class="rounded-4 border-0 p-1 bouton"><a href="main.php" class="btn">Retour à la page d'accueil</a></button></div>
                     </div>
                 </div>
             </form>

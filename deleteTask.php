@@ -6,4 +6,6 @@
 
 <?php
     $db->deleteTask($_POST['delete']); // valeur
+    header("Location: main.php");
+    exit();
 ?>

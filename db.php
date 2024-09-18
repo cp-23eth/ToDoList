@@ -12,6 +12,8 @@ class DataBase {
         $stmt->bindParam(':nom', $nom);
         $stmt->bindParam(':password', $password);
         $stmt->execute();
+
+        return true;
     }
 
     function user($adresseMail, $nom){
@@ -73,6 +75,8 @@ class DataBase {
         $stmt->bindParam(':valueToDo', $valueToDo);
         $stmt->bindParam(':idUser', $idUser);
         $stmt->execute();
+
+        return true;
     }
 
     function takeTask(){
@@ -108,8 +112,6 @@ class DataBase {
         $stmt->execute();
 
         $this->takeTask();
-        header("Location: main.php");
-        exit();
     }
 
     function editTask($id, $titre, $dateToDo, $valueToDo){
@@ -119,8 +121,8 @@ class DataBase {
         $stmt->bindParam(':dateToDo', $dateToDo);
         $stmt->bindParam(':id', $id);
         $stmt->execute(); 
-        header("Location: main.php");
-        exit();
+
+        return true;
     }
 }
 ?>
